@@ -1,20 +1,26 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
 
 export default function App() {
   const [people, setPeople] = useState([
-    { name: 'Shaun', key: '1' },
-    { name: 'Yoshi', key: '2' },
-    { name: 'Mario', key: '3' },
-    { name: 'Luigi', key: '4' },
-    { name: 'Peach', key: '5' },
-    { name: 'Toad', key: '6' },
-    { name: 'Bowser', key: '7' },
+    { name: 'Shaun', id: '1' },
+    { name: 'Yoshi', id: '2' },
+    { name: 'Mario', id: '3' },
+    { name: 'Luigi', id: '4' },
+    { name: 'Peach', id: '5' },
+    { name: 'Toad', id: '6' },
+    { name: 'Bowser', id: '7' },
   ]);
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <FlatList
+        keyExtractor={(item) => item.id}
+        data={people}
+        renderItem={({ item }) => <Text style={styles.item}>{item.name}</Text>}
+      />
+
+      {/* <ScrollView>
         {people.map((item) => {
           return (
             <View key={item.key}>
@@ -22,7 +28,7 @@ export default function App() {
             </View>
           );
         })}
-      </ScrollView>
+      </ScrollView> */}
     </View>
   );
 }
