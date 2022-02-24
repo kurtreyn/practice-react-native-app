@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, FlatList, Alert } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 import Header from './components/header';
 import ToDoItem from './components/todoItem';
 import AddToDo from './components/addToDo';
+import { keyboardProps } from 'react-native-web/dist/cjs/modules/forwardedProps';
 
 export default function App() {
   const [todos, setTodos] = useState([
@@ -30,20 +38,27 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
-      <Header />
-      <View style={styles.content}>
-        <AddToDo submitHandler={submitHandler} />
-        <View style={styles.list}>
-          <FlatList
-            data={todos}
-            renderItem={({ item }) => (
-              <ToDoItem item={item} pressHandler={pressHandler} />
-            )}
-          />
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+        console.log('dismissed keyboard');
+      }}
+    >
+      <View style={styles.container}>
+        <Header />
+        <View style={styles.content}>
+          <AddToDo submitHandler={submitHandler} />
+          <View style={styles.list}>
+            <FlatList
+              data={todos}
+              renderItem={({ item }) => (
+                <ToDoItem item={item} pressHandler={pressHandler} />
+              )}
+            />
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
